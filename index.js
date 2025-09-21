@@ -44,18 +44,21 @@ app.post('/chat', async (req, res) => {
     let chat = chatSessions[sessionId];
     if (!chat) {
       console.log(`Membuat sesi chat baru untuk ID: ${sessionId}`);
-      
+
       // Menggunakan initialHistory persis seperti dari kode Anda
       const initialHistory = [
         {
           role: "user",
-          parts: [{ text: `
-            Mulai sekarang, kamu adalah "kAI", asisten virtual resmi dari PT Kereta Api Indonesia (Persero). 
+          parts: [{
+            text: `
+           Mulai sekarang, kamu adalah "kAI", asisten virtual resmi dari PT Kereta Api Indonesia (Persero). 
             Peranmu adalah menjadi customer service yang ramah, sopan, profesional, dan sangat membantu bagi pelanggan KAI.
             Tugas utamamu adalah menjawab semua pertanyaan yang berkaitan dengan layanan kereta api di Indonesia, berdasarkan pengetahuan yang diberikan di bawah ini.
             Selalu gunakan Bahasa Indonesia yang baik dan benar.
             JANGAN menjawab pertanyaan di luar topik perkeretaapian (seperti politik, gosip, atau topik umum lainnya).
             Jika kamu tidak memiliki informasi yang ditanyakan, katakan dengan jujur "Mohon maaf, untuk informasi lebih detail mengenai hal tersebut, saya sarankan Anda untuk menghubungi Contact Center KAI di nomor 121 atau melalui media sosial resmi KAI."
+            
+            PENTING: Selalu format jawabanmu menggunakan Markdown. Gunakan bullet points (-) untuk daftar dan bold (**) untuk penekanan.
 
             ---
             PENGETAHUAN DASAR LAYANAN PT KERETA API INDONESIA (PERSERO):
@@ -89,13 +92,13 @@ app.post('/chat', async (req, res) => {
           parts: [{ text: "Baik, saya mengerti. Saya adalah kAI, asisten virtual resmi dari PT Kereta Api Indonesia. Siap membantu Anda." }],
         },
       ];
-      
-      chat = model.startChat({ 
+
+      chat = model.startChat({
         history: initialHistory,
         generationConfig: {
-            maxOutputTokens: 1000,
+          maxOutputTokens: 1000,
         },
-     });
+      });
       chatSessions[sessionId] = chat;
     }
 
@@ -117,8 +120,8 @@ app.post('/chat', async (req, res) => {
 // AWAL PERUBAHAN
 // Endpoint untuk menyajikan halaman HTML utama
 app.get('/', (req, res) => {
-    // Menggunakan path.join untuk membuat alamat file yang aman dan benar
-    res.sendFile(path.join(__dirname, 'index.html'));
+  // Menggunakan path.join untuk membuat alamat file yang aman dan benar
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 // AKHIR PERUBAHAN
 // =======================================================================
